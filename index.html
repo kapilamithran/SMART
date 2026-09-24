@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#102b2a">
+<meta name="description" content="SMART — Scan, Mark, Audit, Review & Total. On-device PP-OCRv5 Mobile booklet marks scanner.">
+<title>SMART · Scan, Mark, Audit, Review &amp; Total</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/smart.css">
+<script src="js/coi.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./"><span class="brand-icon">S</span>SMART<span class="edition">SCAN · MARK · AUDIT · REVIEW · TOTAL</span></a>
+  <button id="settingsBtn" class="quiet">Settings <span aria-hidden="true">◈</span></button>
+</header>
+
+<main>
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">MARK ENTRY / CAMERA WORKSPACE</p>
+      <h1>Scan, Mark, Audit, Review &amp; Total.</h1>
+      <p class="muted">Frame the cover. Take a photo. Review and save.</p>
+    </div>
+    <button id="newBatchBtn" class="secondary">＋ New batch</button>
+  </div>
+
+  <section class="batch-bar">
+    <div>
+      <span class="eyebrow">CURRENT BATCH</span>
+      <select id="batchSelect" aria-label="Current batch"><option>Loading…</option></select>
+    </div>
+    <div class="batch-count"><strong id="count">0</strong><span>records saved</span></div>
+    <button id="finishBtn" class="secondary">Finish batch <span>↗</span></button>
+  </section>
+
+  <div class="workspace">
+    <section class="scanner-panel">
+      <div class="panel-title"><h2>Scan booklet</h2><span class="pill" id="modePill">PHOTO CAPTURE</span></div>
+      <div class="camera-stage">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="overlay"></canvas>
+        <div id="cameraEmpty">
+          <div class="scan-symbol">⌗</div>
+          <h3 id="emptyTitle">Loading scanner…</h3>
+          <p id="emptyText">Preparing PP-OCRv5 Mobile on this device.</p>
+          <button id="startCamBtn" class="primary" hidden>Enable camera</button>
+          <span>Rear camera · Full-resolution photo</span>
+        </div>
+        <div id="liveBadge" hidden>Looking for printed form</div>
+        <div id="busy" hidden>Reading marks…</div>
+      </div>
+      <div class="scan-status">
+        <span id="statusIcon">○</span>
+        <div><strong id="status" role="status" aria-live="polite">Ready when you are</strong>
+          <p id="statusDetail">Include the register number, the marks table and the grand-total box.</p></div>
+      </div>
+      <div class="quality">
+        <span id="qForm">Form —</span><span id="qFrame">Cover —</span><span id="qLight">Light —</span><span id="qFocus">Focus —</span>
+      </div>
+      <div class="scan-actions">
+        <button id="shutterBtn" class="primary" disabled>◉ Take photo</button>
+        <label class="secondary upload" for="fileIn">↥ Upload photos</label>
+        <input type="file" id="fileIn" accept="image/*" multiple hidden>
+        <input type="file" id="nativeCam" accept="image/*" capture="environment" hidden>
+      </div>
+      <p class="privacy-note">PP-OCRv5 Mobile reads the marks on this device — no recognition API or server. Photos are kept with your records on this device. Review every red box before saving.</p>
+    </section>
+
+    <aside>
+      <section class="guide card">
+        <p class="eyebrow">THE PRINTED FORM</p>
+        <h2>Every mark, accounted for.</h2>
+        <ol class="field-list">
+          <li><span>01</span><div><strong>Register number</strong><p>13 boxes · starts with 2116</p></div></li>
+          <li><span>02</span><div><strong>Part A <em>/ 20</em></strong><p>Q1–Q10 · only 0, 1 or 2 · 1+1 = 2</p></div></li>
+          <li><span>03</span><div><strong>Part B <em>/ 55</em></strong><p>11–15 · a or b · 0–11 · 6+2 = 8</p></div></li>
+          <li><span>04</span><div><strong>Totals <em>/ 75</em></strong><p>Written A, B, grand total and CO Total</p></div></li>
+        </ol>
+        <div class="note"><strong>Audit, not guesswork.</strong><br>Doubtful digits and totals that disagree get a red box. Fixes are suggested, never applied for you.</div>
+      </section>
+      <section class="card records">
+        <div class="panel-title"><h2>Saved records</h2><span id="batchState" class="pill">LOCAL</span></div>
+        <div id="recordList"><p class="empty">Your reviewed records will appear here.</p></div>
+        <div id="downloads" hidden></div>
+      </section>
+    </aside>
+  </div>
+  <footer class="foot"><span>SMART v2.0 · Saved on this browser · Export before clearing site data</span><span id="engineInfo">No recognition API or usage fee</span></footer>
+</main>
+
+<section class="sheet hidden" id="review">
+  <header><h2>Review</h2><span class="meta" id="revMeta"></span></header>
+  <div class="body" id="revBody"></div>
+  <div class="footer" id="revFooter">
+    <button class="secondary" id="retakeBtn">Retake</button>
+    <button class="primary" id="saveBtn">OK · Save</button>
+  </div>
+</section>
+
+<section class="sheet hidden" id="settings">
+  <header><h2>Settings</h2><button class="close" data-close aria-label="Close">×</button></header>
+  <div class="body" id="settingsBody"></div>
+</section>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
