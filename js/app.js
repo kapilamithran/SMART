@@ -39,7 +39,7 @@ const S = { rt: null, cam: null, batch: null, records: [], current: null, queue:
 })();
 
 function wire() {
-  $('#startCamBtn').onclick = startCamera;
+    $('#startCamBtn').onclick = () => { S.nativeT0 = performance.now(); $('#nativeCam').click(); };
   $('#shutterBtn').onclick = () => takePhoto('photo');
   $('#fileIn').onchange = e => { S.queue.push(...[...e.target.files].map(f => ({ file: f, source: 'gallery' }))); e.target.value = ''; nextFromQueue(); };
   $('#nativeCam').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) { S.queue.push({ file: f, source: 'photo', t0: S.nativeT0 }); nextFromQueue(); } };
